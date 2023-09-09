@@ -41,6 +41,14 @@ pipeline{
                         bat 'mvn test'
                 }
             }
+        stage('Deploy Frontend'){
+            steps{
+                dir('tasks-frontend') {
+                        git credentialsId: 'github_login', url: 'https://github.com/CarvalhoQA/tasks-frontend'
+                        bat 'mvn clean package -DskipTests=true'
+                        deploy adapters: [tomcat8(credentialsId: 'e88eb18b-d1a9-4437-8ee8-7c83a66adb87', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-frontend', war: 'target/tasks.war'
+                }
+            }
         }
     } 
 }
