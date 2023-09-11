@@ -51,5 +51,13 @@ pipeline{
                 }
             }
         }
+        stage('Frontend test'){
+            steps{
+                dir('tasks-web-test') {
+                       git credentialsId: 'github_login', url: 'https://github.com/CarvalhoQA/tasks-web-test'
+                       bat 'mvn test'
+                }
+           }
+        }
     } 
 }
