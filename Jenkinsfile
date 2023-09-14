@@ -31,7 +31,7 @@ pipeline{
         }
         stage('Deploy Backend'){
             steps{
-                deploy adapters: [tomcat8(credentialsId: 'e88eb18b-d1a9-4437-8ee8-7c83a66adb87', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
+                deploy adapters: [tomcat8(credentialsId: 'tomcat_login', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
             }
         }
         stage('API test'){
@@ -47,7 +47,7 @@ pipeline{
                 dir('tasks-frontend') {
                        git credentialsId: 'github_login', url: 'https://github.com/CarvalhoQA/tasks-frontend'
                        bat 'mvn clean package -DskipTests=true'
-                       deploy adapters: [tomcat8(credentialsId: 'e88eb18b-d1a9-4437-8ee8-7c83a66adb87', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
+                       deploy adapters: [tomcat8(credentialsId: 'tomcat_login', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
             }
         }
